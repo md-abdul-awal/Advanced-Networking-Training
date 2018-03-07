@@ -1,0 +1,77 @@
+#Task 1: Basic Configuration
+
+# R1
+
+int loopback 50
+ ip add 50.50.50.50 255.255.255.255
+ ip ospf 1 area 0
+!
+int g1/0
+ description Connected to ESW1
+ ip add 100.100.11.1 255.255.255.0
+ no shutdown
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+!
+int g2/0
+ description Connected to ESW2
+ ip add 100.100.12.1 255.255.255.0
+ no shutdown
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+
+
+
+# ESW1
+
+ip routing
+!
+interface FastEthernet1/0
+ no shutdown
+ description Connected to R1
+ no switchport
+ ip address 100.100.11.2 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+!
+interface FastEthernet1/1
+ switchport mode trunk
+!
+interface FastEthernet1/2
+ switchport mode trunk
+
+
+# ESW2
+
+ip routing
+!
+interface FastEthernet1/0
+ no shutdown
+ description Connected to R1
+ no switchport
+ ip address 100.100.12.2 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+!
+interface FastEthernet1/1
+ switchport mode trunk
+!
+interface FastEthernet1/3
+ switchport mode trunk
+
+
+# ESW3
+
+interface FastEthernet1/0
+ switchport mode access
+ switchport access vlan 10
+!
+interface FastEthernet1/1
+ switchport mode access
+ switchport access vlan 20
+!
+interface FastEthernet1/2
+ switchport mode trunk
+!
+interface FastEthernet1/3
+ switchport mode trunk
