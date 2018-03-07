@@ -1,0 +1,154 @@
+# Task 1: Basic Configuration
+
+# R1
+
+interface Loopback10
+ description R1’s Loopback 10
+ ip address 10.10.10.1 255.255.255.255
+!
+interface GigabitEthernet1/0
+ description Connected to R3 Gi1/0
+ ip address 100.100.13.1 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet2/0
+ description Connected to R2 Gi2/0
+ ip address 100.100.12.1 255.255.255.0
+ no shutdown
+
+
+# R2
+
+interface Loopback10
+ description R2’s Loopback 10
+ ip address 10.10.10.2 255.255.255.255
+!
+interface GigabitEthernet2/0
+ description Connected to R1 Gi2/0
+ ip address 100.100.12.2 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet1/0
+ description Connected to R3 Gi1/0
+ ip address 100.100.24.2 255.255.255.0
+ no shutdown
+
+
+# R3
+
+interface Loopback10
+ description R3’s Loopback 10
+ ip address 10.10.10.3 255.255.255.255
+!
+interface GigabitEthernet1/0
+ description Connected to R1 Gi1/0
+ ip address 100.100.13.3 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet2/0
+ description Connected to R4 Gi2/0
+ ip address 100.100.34.3 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet3/0
+ description Connected to R5 Gi3/0
+ ip address 100.100.35.3 255.255.255.0
+ no shutdown
+
+
+# R4
+
+interface Loopback10
+ description R4’s Loopback 10
+ ip address 10.10.10.4 255.255.255.255
+!
+interface GigabitEthernet1/0
+ description Connected to R2 Gi1/0
+ ip address 100.100.24.4 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet2/0
+ description Connected to R3 Gi2/0
+ ip address 100.100.34.4 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet3/0
+ description Connected to R6 Gi3/0
+ ip address 100.100.46.4 255.255.255.0
+ no shutdown
+
+
+# R5
+
+interface Loopback10
+ description R5’s Loopback 10
+ ip address 10.10.10.5 255.255.255.255
+!
+interface GigabitEthernet1/0
+ description Connected to R7 Gi1/0
+ ip address 100.100.57.5 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet2/0
+ description Connected to R7 Gi2/0
+ ip address 100.100.75.5 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet3/0
+ description Connected to R3 Gi3/0
+ ip address 100.100.35.5 255.255.255.0
+ no shutdown
+
+
+# R6
+
+interface Loopback10
+ description R6’s Loopback 10
+ ip address 10.10.10.6 255.255.255.255
+!
+interface GigabitEthernet1/0
+ description Connected to R8 Gi1/0
+ ip address 100.100.68.6 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet2/0
+ description Connected to R8 Gi2/0
+ ip address 100.100.86.6 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet3/0
+ description Connected to R4 Gi3/0
+ ip address 100.100.46.6 255.255.255.0
+ no shutdown
+
+
+# R7
+
+interface Loopback10
+ description R7’s Loopback 10
+ ip address 10.10.10.7 255.255.255.255
+!
+interface GigabitEthernet1/0
+ description Connected to R5 Gi1/0
+ ip address 100.100.57.7 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet2/0
+ description Connected to R5 Gi2/0
+ ip address 100.100.75.7 255.255.255.0
+ no shutdown
+
+
+# R8
+
+interface Loopback10
+ description R8’s Loopback 10
+ ip address 10.10.10.8 255.255.255.255
+!
+interface GigabitEthernet1/0
+ description Connected to R6 Gi1/0  ip address 100.100.68.8 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet2/0
+ description Connected to R6 Gi2/0  ip address 100.100.86.8 255.255.255.0
+ no shutdown
