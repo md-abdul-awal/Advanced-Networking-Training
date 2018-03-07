@@ -1,0 +1,92 @@
+# Task 1.1: Basic Configuration
+
+# R1
+
+interface Loopback0
+ ip address 192.168.1.1 255.255.255.0
+!
+interface GigabitEthernet1/0
+ description Connected to R5 Gi1/0
+ ip address 100.100.15.1 255.255.255.0
+ no shutdown
+
+
+# R2
+
+interface Loopback0
+ ip address 192.168.2.1 255.255.255.0
+!
+interface GigabitEthernet2/0
+ description Connected to R5 Gi2/0
+ ip address 100.100.25.2 255.255.255.0
+ no shutdown
+
+
+# R3
+
+interface Loopback0
+ ip address 192.168.3.1 255.255.255.0
+!
+interface GigabitEthernet3/0
+ description Connected to R5 Gi3/0
+ ip address 100.100.35.3 255.255.255.0
+ no shutdown
+
+
+# R4
+
+interface Loopback0
+ ip address 192.168.4.1 255.255.255.0
+!
+interface GigabitEthernet4/0
+ description Connected to R5 Gi4/0
+ ip address 100.100.45.4 255.255.255.0
+ no shutdown
+
+
+# R5
+
+interface GigabitEthernet1/0
+ description Connected to R1 Gi1/0
+ ip address 100.100.15.5 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet2/0
+ description Connected to R2 Gi2/0
+ ip address 100.100.25.5 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet3/0
+ description Connected to R3 Gi3/0
+ ip address 100.100.35.5 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet4/0
+ description Connected to R4 Gi4/0
+ ip address 100.100.45.5 255.255.255.0
+ no shutdown
+
+
+# Task 1.2: Static Route Configuration
+
+# R1
+
+ip route 100.100.25.0 255.255.255.0 100.100.15.5
+ip route 100.100.35.0 255.255.255.0 100.100.15.5
+ip route 100.100.45.0 255.255.255.0 100.100.15.5
+
+
+# R2
+
+ip route 0.0.0.0 0.0.0.0 100.100.25.5
+
+
+# R3
+
+ip route 0.0.0.0 0.0.0.0 100.100.35.5
+
+
+# R4
+
+ip route 0.0.0.0 0.0.0.0 100.100.45.5
+
