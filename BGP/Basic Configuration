@@ -146,9 +146,11 @@ interface Loopback10
  ip address 10.10.10.8 255.255.255.255
 !
 interface GigabitEthernet1/0
- description Connected to R6 Gi1/0  ip address 100.100.68.8 255.255.255.0
+ description Connected to R6 Gi1/0
+ ip address 100.100.68.8 255.255.255.0
  no shutdown
 !
 interface GigabitEthernet2/0
- description Connected to R6 Gi2/0  ip address 100.100.86.8 255.255.255.0
+ description Connected to R6 Gi2/0
+ ip address 100.100.86.8 255.255.255.0
  no shutdown
