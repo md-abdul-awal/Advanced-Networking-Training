@@ -1,29 +1,39 @@
-# Task 1.1: Basic Configuration
+Task 1: Basic Configuration
 
-# R1
+Task 1.1: Interface Configuration
 
-interface FastEthernet0/0
- description LAN-1
- ip address 192.168.1.1 255.255.255.0
- no shutdown
-!
-interface FastEthernet0/1
- description LAN-2
- ip address 192.168.2.1 255.255.255.0
- no shutdown
-!
+R1
+
 interface GigabitEthernet1/0
  description Connected to R2 Gi1/0
  ip address 100.100.12.1 255.255.255.0
  no shutdown
 !
 interface GigabitEthernet2/0
- description Connected to R4 Gi2/0
- ip address 100.100.14.1 255.255.255.0
+ description Connected to R3 Gi2/0
+ ip address 100.100.13.1 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet3/0
+ description Connected LAN Switch
+ no ip address
+ no shutdown
+!
+interface GigabitEthernet3/0.10
+ encapsulation dot1Q 10
+ description Connected to VLAN 10
+ ip address 10.10.10.1 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet3/0.20
+ encapsulation dot1Q 20
+ description Connected to VLAN 20
+ ip address 10.10.20.1 255.255.255.0
  no shutdown
 
 
-# R2
+
+R2
 
 interface GigabitEthernet1/0
  description Connected to R1 Gi1/0
@@ -31,148 +41,113 @@ interface GigabitEthernet1/0
  no shutdown
 !
 interface GigabitEthernet2/0
- description Connected to R3 Gi2/0
- ip address 100.100.23.2 255.255.255.0
+ description Connected to R4 Gi2/0
+ ip address 100.100.24.2 255.255.255.0
  no shutdown
 
 
-# R3
+R3
 
-interface Loopback 0
- ip address 10.10.1.1 255.255.255.0
-!
-interface GigabitEthernet2/0
- description Connected to R2 Gi2/0
- ip address 100.100.23.3 255.255.255.0
- no shutdown
-!
-interface GigabitEthernet3/0
- description Connected to R5 Gi3/0
- ip address 100.100.35.3 255.255.255.0
- no shutdown
-
-
-# R4
-
-interface GigabitEthernet1/0
- description Connected to R5 Gi1/0
- ip address 100.100.45.4 255.255.255.0
- no shutdown
-!
 interface GigabitEthernet2/0
  description Connected to R1 Gi2/0
- ip address 100.100.14.4 255.255.255.0
+ ip address 100.100.13.3 255.255.255.0
  no shutdown
-
-
-# R5
-
-interface Loopback 0
- ip address 10.10.2.1 255.255.255.0
 !
 interface GigabitEthernet1/0
  description Connected to R4 Gi1/0
- ip address 100.100.45.5 255.255.255.0
- no shutdown
-!
-interface GigabitEthernet3/0
- description Connected to R3 Gi3/0
- ip address 100.100.35.5 255.255.255.0
+ ip address 100.100.34.3 255.255.255.0
  no shutdown
 
 
-# Task 1.2: IGP (OSPF) Configuration
 
-# R2
+R4
 
-router ospf 1
- router-id 2.2.2.2
- passive-interface gi1/0
- redistribute static subnets
+interface Loopback 10
+ ip address 50.50.50.1 255.255.255.0
 !
 interface GigabitEthernet1/0
- ip ospf 1 area 0
+ description Connected to R3 Gi1/0
+ ip address 100.100.34.4 255.255.255.0
+ no shutdown
 !
 interface GigabitEthernet2/0
- ip ospf 1 area 0
-!
-ip route 192.168.1.0 255.255.255.0 100.100.12.1
+ description Connected to R2 Gi2/0
+ ip address 100.100.24.4 255.255.255.0
+ no shutdown
 
 
-# R3
+Task 1.2: Ethernetswitch Configuration
 
-router ospf 1
- router-id 3.3.3.3
- default-information originate always
-!
-interface Loopback 0
- ip ospf 1 area 0
-!
-interface GigabitEthernet2/0
- ip ospf 1 area 0
+Port 0: dot1q
+Port 1: access vlan 10
+Port 2: access vlan 20
 
+Task 1.3: VPCS Configuration
 
-# R4
+VPCS-1
 
-router ospf 1
- router-id 4.4.4.4
- passive-interface gi2/0  redistribute static subnets
-!
-interface GigabitEthernet1/0
- ip ospf 1 area 0
-!
-interface GigabitEthernet2/0
- ip ospf 1 area 0
-!
-ip route 192.168.2.0 255.255.255.0 100.100.14.1
+ip 10.10.10.10 255.255.255.0 10.10.10.1
+save
+
+VPCS-2
+
+ip 10.10.20.20 255.255.255.0 10.10.20.1
+save
 
 
-# R5
+Task 2: Default Route Configuration
 
-router ospf 1
- router-id 5.5.5.5
- default-information originate always
-!
-interface Loopback 0
- ip ospf 1 area 0
-!
-interface GigabitEthernet1/0
- ip ospf 1 area 0
-
-
-# Task 1.3: Static Route Configuration
-
-# R3
-
-ip route 10.10.2.0 255.255.255.0 100.100.35.5
-ip route 192.168.2.0 255.255.255.0 100.100.35.5
-ip route 100.100.14.0 255.255.255.0 100.100.35.5
-ip route 100.100.45.0 255.255.255.0 100.100.35.5
-
-
-# R5
-
-ip route 10.10.1.0 255.255.255.0 100.100.35.3
-ip route 192.168.1.0 255.255.255.0 100.100.35.3
-ip route 100.100.12.0 255.255.255.0 100.100.35.3
-ip route 100.100.23.0 255.255.255.0 100.100.35.3
-
-
-# Task 1.4: Default Route Configuration
-
-# R1
+R1
 
 ip route 0.0.0.0 0.0.0.0 100.100.12.2
-ip route 0.0.0.0 0.0.0.0 100.100.14.4 10
+ip route 0.0.0.0 0.0.0.0 100.100.13.3 10
+
+Task 3: BGP Configuration
+
+R2
+
+router bgp 200
+ neighbor 100.100.24.4 remote-as 400
+ address-family ipv4
+  network 100.100.12.0 mask 255.255.255.0
+
+R3
+
+router bgp 300
+ neighbor 100.100.34.4 remote-as 400
+ address-family ipv4
+  network 100.100.13.0 mask 255.255.255.0
+
+R4
+
+router bgp 400
+ neighbor 100.100.24.2 remote-as 200
+ neighbor 100.100.34.3 remote-as 300
+ address-family ipv4
+  network 50.50.50.0 mask 255.255.255.0
+  neighbor 100.100.24.2 default-originate
+  neighbor 100.100.34.3 default-originate
 
 
-# Task 1.5: Default Route Configuration
 
-# VPCS-1
+Task 4: NAT Configuration
 
-ip 192.168.1.2 255.255.255.0 192.168.1.1
+R1
 
-
-# VPCS-2
-
-ip 192.168.2.2 255.255.255.0 192.168.2.1
+access-list 1 permit 10.10.10.0 0.0.0.255
+access-list 2 permit 10.10.20.0 0.0.0.255
+!
+ip nat inside source list 1 interface GigabitEthernet1/0 overload
+ip nat inside source list 2 interface GigabitEthernet2/0 overload
+!
+int gi3/0.10
+ ip nat inside
+!
+int gi3/0.20
+ ip nat inside
+!
+int gi1/0
+ ip nat outside
+!
+int gi2/0
+ ip nat outside
