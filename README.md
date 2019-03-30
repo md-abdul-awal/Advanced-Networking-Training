@@ -35,9 +35,10 @@ This is a training course designed for those who are interested in learning adva
     
 # Lab Simulator
   - GNS3
+  - PacketTracer
   - IOU Web
   - EVE-NG
   
 # Cisco IOS
   - c7200-advipservicesk9-mz.152-4.S7.bin
-  - c3725-adventerprisek9-mz.124-15.T7.bin
+  - c3745-adventerprisek9-mz.124-15.T14.bin
