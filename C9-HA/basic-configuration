@@ -1,0 +1,151 @@
+Task 1.1: Interface Configuration
+
+IR1: 
+
+interface GigabitEthernet0/0/0
+ no shutdown
+ ip address 100.100.12.1 255.255.255.0
+ description *** Connected to CR1 ***
+!
+interface GigabitEthernet0/0/1
+ no shutdown
+ ip address 100.100.13.1 255.255.255.0
+ description *** Connected to CR2 ***
+!
+interface Loopback 50
+ ip address 50.50.50.1 255.255.255.0
+
+CR1:
+
+interface GigabitEthernet0/0/0
+ no shutdown
+ ip address 100.100.12.2 255.255.255.0
+ description *** Connected to IR1 ***
+!
+interface range GigabitEthernet0/1/0-2
+ no shutdown
+ switchport mode trunk
+!
+interface Vlan10
+ ip address 10.10.10.252 255.255.255.0
+!
+interface Vlan20
+ ip address 10.10.20.252 255.255.255.0
+
+CR2:
+
+interface GigabitEthernet0/0/1
+ no shutdown
+ ip address 100.100.13.3 255.255.255.0
+ description *** Connected to IR1 ***
+!
+interface range GigabitEthernet0/1/0-2
+ no shutdown
+ switchport mode trunk
+!
+interface Vlan10
+ ip address 10.10.10.253 255.255.255.0
+!
+interface Vlan20
+ ip address 10.10.20.253 255.255.255.0
+
+Task 1.2: VLAN Configuration
+
+CR1 and CR2: (In privilege mode)
+
+vlan database
+ vlan 10 name FACULTY
+ vlan 20 name STUDENT
+ exit
+
+Task 1.3: Distribution and Access Switch Configuration
+
+DS1 and DS2:
+
+vtp mode transparent
+!
+vlan 10
+ name FACULTY
+!
+vlan 20
+ name STUDENT
+!
+interface range gi1/0/1-3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+
+AS1 and AS2:
+
+vtp mode transparent
+!
+vlan 10
+ name FACULTY
+!
+vlan 20
+ name STUDENT
+!
+interface gi0/1
+ switchport mode trunk
+!
+interface fa0/1
+ switchport access vlan 10
+!
+interface fa0/2
+ switchport access vlan 20
+
+Task 1.4: PC Configuration
+
+PC1 and PC3:
+
+IP Address: 10.10.10.1 and 10.10.10.2
+Subnet Mask: 255.255.255.0
+Gateway: 10.10.10.254
+PC2 and PC4:
+
+IP Address: 10.10.20.1 and 10.10.20.2
+Subnet Mask: 255.255.255.0
+Gateway: 10.10.20.254
+
+Task 1.5: OSPF Configuration
+
+IR1:
+ 
+int range gi0/0/0,gi0/0/1,lo50
+ ip ospf 1 area 0
+ 
+CR1:
+
+int range gi0/0/0
+ ip ospf 1 area 0
+!
+int vlan 10
+ ip ospf 1 area 0
+!
+int vlan 20
+ ip ospf 1 area 0
+
+CR2:
+
+int range gi0/0/1
+ ip ospf 1 area 0
+!
+int vlan 10
+ ip ospf 1 area 0
+!
+int vlan 20
+ ip ospf 1 area 0
+
+
+Task 2: RSTP Configuration
+
+CR1:
+
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10 root primary
+spanning-tree vlan 20 root secondary
+
+CR2:
+
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10 root secondary
+spanning-tree vlan 20 root primary
